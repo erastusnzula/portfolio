@@ -1,0 +1,18 @@
+{% extends "admin/base.html" %}
+{% load static %}
+{% block title %}{{ title }}
+{% endblock %}
+
+{% block extrahead %}
+<link rel="shortcut icon"  href="{% static 'images/s.ico' %}"/>
+{% endblock %}
+
+{% block branding %}
+
+<h1 id="site-name">
+<a href="{% url 'admin:index' %}">
+<img src="{% static 'images/s.ico' %}" height="50px" />
+</a>
+</h1>
+{% endblock %}
+{% block nav-global %}{% endblock %}

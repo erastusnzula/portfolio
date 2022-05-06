@@ -1,0 +1,39 @@
+{% extends 'core/base.html' %}
+{% load crispy_forms_tags %}
+{% block head_title %}| Contact{% endblock %}
+{% block content %}
+
+
+<form name="contact-form" hx-post="." hx-target="body" id="c-form">
+    {% csrf_token %}
+    <div class="container mt-3">
+        <h3 class="pb-2 mb-2 border-bottom ">Contact Me</h3>
+        {{ form|crispy }}
+        <button id='button-submit' onclick="submitClicked()" class="btn btn-primary" type="submit">Submit</button>
+
+        <button id="button-loader" class="btn btn-primary">
+            <i id="loader" class="fa fa-spinner fa-spin"></i> Sending...
+        </button>
+        <a href="/" id="go-home" class="btn btn-primary"><i
+                class="fa fa-home w3-margin-right"></i>Go to Home page
+        </a>
+    </div>
+</form>
+<script>
+document.getElementById('loader').style.display = 'none';
+document.getElementById('button-loader').style.display = 'none';
+
+function submitClicked(){
+    let f=document.getElementById('c-form');
+    if (f.email.value.length > 0 && f.message.value.length > 0){
+    document.getElementById('loader').style.display = 'inline-block';
+    document.getElementById('button-loader').style.display = 'block';
+    document.getElementById('button-submit').style.display = 'none';
+    document.getElementById('go-home').style.display = 'none';
+    }
+    }
+
+
+</script>
+
+{% endblock %}

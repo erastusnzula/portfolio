@@ -1,0 +1,36 @@
+{% load static %}
+{% block sidebar %}
+
+
+<!-- Sidebar Widgets Column -->
+<div class="col-md-4 float-right">
+    {% for setting in settings %}
+    <div class="card my-3 w3-hide-small">
+        <h5 class="card-header">About Me</h5>
+        <div class="card-body">
+
+            <p class="card-text"> {{setting.about|slice:":100"}}...</p>
+            <button class="btn btn-danger" hx-get="{% url 'core:settings' %}" hx-target="body">Read more
+            </button>
+            <button class="btn btn-primary" hx-get="{% url 'core:contact' %}" hx-target="body">Contact Me
+            </button>
+        </div>
+    </div>
+    {% endfor %}
+    <div class="container" style="max-height: 50em; overflow: scroll;">
+        <div class="card">
+            <div class="mt-2 ml-2">
+                <a href="https://twitter.com/erastus_nzula?ref_src=twsrc%5Etfw" class="twitter-follow-button"
+                   data-show-count="false" target="_blank">Follow @erastus_nzula</a>
+                <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+            </div>
+            <a class="twitter-timeline" data-chrome="nofooter transparent" target="_blank"
+               href="https://twitter.com/erastus_nzula?ref_src=twsrc%5Etfw">Tweets by erastus_nzula</a>
+            <script async src="https://platform.twitter.com/widgets.js" charset="utf-8"></script>
+
+        </div>
+    </div>
+</div>
+
+
+{% endblock sidebar %}

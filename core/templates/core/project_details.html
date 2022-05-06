@@ -1,0 +1,56 @@
+{% extends 'core/base.html' %}
+{% load humanize %}
+{% load crispy_forms_tags %}
+{% load static %}
+{% block head_title %}| {{project.title}}{% endblock %}
+{% block content %}
+
+
+<div class="container" xmlns="http://www.w3.org/1999/html" xmlns="http://www.w3.org/1999/html">
+    <div class="row">
+        <div class="col-md-8 card mb-4  mt-3 left  top">
+            <div class="project-img">
+                {% if project.image %}
+                <img src="{{project.image.url}}" alt="" width="100%" height="270px">
+                {% endif %}
+            </div>
+            <div class="card-body">
+                <h1>{{ project.title }}</h1>
+                <p class="card-text text-muted">
+                    {{project.created_on}}&nbsp;|&nbsp;{{project.get_read_time}}&nbsp;|&nbsp;Category:&nbsp;
+                {% for category in project.category.all %}
+                <a href="{% url 'core:category' category.name %}">
+                    {{ category.name }}</a>&nbsp;
+                {% endfor %}
+
+                    </p>
+                <p class="card-text ">{{ project.description | safe }}</p>
+                {% if project.github %}
+                <a href="{{project.github}}" target="_blank">View code &rarr;</a>
+                {% endif %}
+                {% if project.live %}
+                <a href="{{project.live}}" target="_blank">View live &rarr;</a>
+                {% endif %}
+                <br>
+                <div class="container mt-2">
+                    {% for comment in comments %}
+                    <p class=" text-muted"><span style="text-transform: capitalize;">{{ comment.username }}</span> | {{ comment.added_on|naturaltime }}</p>
+                    <p>{{comment.content }}</p>
+                    {% endfor %}
+                </div>
+                <form hx-encoding='multipart/form-data' hx-post="." hx-target="body">
+                    {% csrf_token %}
+                    <div class="container mt-3">
+                        <h5 class="pb-2 mb-2 border-bottom ">Leave a comment</h5>
+                        {{ form|crispy }}
+                        <button type="submit" class="btn btn-primary">Send</button>
+                    </div>
+
+                </form>
+            </div>
+        </div>
+        {% include 'core/side_bar.html' %}
+    </div>
+</div>
+
+{% endblock content %}

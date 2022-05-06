@@ -1,0 +1,25 @@
+{% extends "core/base.html" %}
+{% block head_title %}| About{% endblock %}
+{% block content %}
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mt-3 left">
+            <div class="card mb-4">
+                <h5 class="card-header">About</h5>
+                {% for setting in settings %}
+
+                <div class="card-body">
+                    <p class="card-text">{{setting.about }}</p>
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% include 'core/side_bar.html' %}
+
+    </div>
+    <a href="/" class="w3-blue w3-bar-item w3-button"><i
+            class="fa fa-home w3-margin-right"></i>Go to Home page
+    </a>
+</div>
+{%endblock%}

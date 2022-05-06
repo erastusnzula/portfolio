@@ -1,0 +1,58 @@
+{% extends 'core/base.html' %}
+{% load static %}
+{% load humanize %}
+
+{% block content %}
+<header class="masthead">
+    <div class="container">
+        <div class=" col-md-10 mx-auto">
+            <div class="site-heading">
+                <div class="card w3-animate-right" style="background:blue;">
+                    <div class="card-body">
+                        <a hx-get="/" hx-target="body">
+                            <img src="{% static 'images/s.png' %}" alt="Image" style="width:65px;"
+                                 class="w3-circle w3-right  w3-hover-opacity"></a>
+
+                        <h5 class=" site-heading mt-3 text-white text-center"> Erastus Nzula</h5>
+                        <p class="text-light text-center">Python, Django and Web Developer
+                        </p>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</header>
+
+<div class="container">
+    <div class="row">
+        <div class="col-md-8 mt-3 left">
+            <h3 class=" card-header mb-1">Projects</h3>
+            {% for project in projects %}
+            <div class="card mb-4">
+                <div class="project-img">
+                    {% if project.image %}
+                    <img src="{{project.image.url}}" alt="" width="100%" height="270px">
+                    {% endif %}
+                </div>
+                <div class="card-body">
+                    <h3><a class="card-title" href="{% url 'core:project-details' project.id project.title %}">{{ project.title }}</a></h3>
+                    <p class="card-text text-muted h6">
+                        Added on : {{project.created_on|date:"d-M-Y"}}&nbsp;|&nbsp;{{project.get_read_time}}&nbsp;|&nbsp;Category:&nbsp;
+                        {% for category in project.category.all %}
+                        <a href="{% url 'core:category' category.name %}">
+                            {{ category.name }}</a>&nbsp;
+                        {% endfor %}
+
+                    </p>
+                    <p class="card-text" id="post">{{project.description|slice:":200"|safe }}</p>
+                    <a href="{% url 'core:project-details' project.id project.title  %}">Read more &rarr;</a>
+                    <br>
+
+                </div>
+            </div>
+            {% endfor %}
+        </div>
+        {% include 'core/side_bar.html' %}
+    </div>
+</div>
+{% endblock %}
